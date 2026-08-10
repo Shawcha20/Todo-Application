@@ -13,4 +13,9 @@ public class TodoService
         var mongoDatabase= mongoClient.GetDatabase(settings.Value.DatabaseName);
         _todos=mongoDatabase.GetCollection<Todo>(settings.Value.CollectionName);
     }
+    public async Task<List<Todo>> GetAllTodos()
+    {
+        var todos= await _todos.Find(_=>true).ToListAsync();
+        return todos;
+    }
 }
