@@ -1,5 +1,6 @@
 using backend.Models;
 using backend.Settings;
+using Microsoft.AspNetCore.Routing.Tree;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
 using MongoDB.Bson;
@@ -34,13 +35,19 @@ public class TodoService
     }
     public async Task<Todo?> getTodoId(string id)
     {
-        var objectId= ObjectId.Parse(id);
+        if(!ObjectId.TryParse(id, out var objectId))
+        {
+            return null;
+        }
         var todo= await _todos.Find(todo=>todo.ID==objectId).FirstOrDefaultAsync();
         return todo;
     }
     public async Task<Todo> updateTodoId(string id, Updatetodo req)
     {
-        var objectId= ObjectId.Parse(id);
+        if(!ObjectId.TryParse(id, out var objectId))
+        {
+            return null;
+        }
         var existingTodo= await _todos.Find(todo=>todo.ID==objectId).FirstOrDefaultAsync();
         if(existingTodo==null) return null;
         var update=Builders<Todo>.Update.Set(todo=>todo.Title,req.title).Set(todo=>todo.Description, req.description).Set(todo=>todo.isCompleted,req.IsCompleted);
@@ -52,7 +59,10 @@ public class TodoService
     }
     public async Task<bool> DeleteTodo(string id)
     {
-        var objectid= ObjectId.Parse(id);
+        if(ObjectId.TryParse(id, out var objectid))
+        {
+            return false;
+        }
         var todo= await _todos.DeleteOneAsync(todo=>todo.ID==objectid);
         return todo.DeletedCount>0;
     }

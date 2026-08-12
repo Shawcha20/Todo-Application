@@ -6,8 +6,16 @@ F:\.net projects\backend\bin\Debug\net9.0\backend.deps.json
 F:\.net projects\backend\bin\Debug\net9.0\backend.runtimeconfig.json
 F:\.net projects\backend\bin\Debug\net9.0\backend.dll
 F:\.net projects\backend\bin\Debug\net9.0\backend.pdb
-F:\.net projects\backend\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
+F:\.net projects\backend\bin\Debug\net9.0\DnsClient.dll
 F:\.net projects\backend\bin\Debug\net9.0\Microsoft.OpenApi.dll
+F:\.net projects\backend\bin\Debug\net9.0\MongoDB.Bson.dll
+F:\.net projects\backend\bin\Debug\net9.0\MongoDB.Driver.dll
+F:\.net projects\backend\bin\Debug\net9.0\SharpCompress.dll
+F:\.net projects\backend\bin\Debug\net9.0\Snappier.dll
+F:\.net projects\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+F:\.net projects\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+F:\.net projects\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+F:\.net projects\backend\bin\Debug\net9.0\ZstdSharp.dll
 F:\.net projects\backend\obj\Debug\net9.0\backend.csproj.AssemblyReference.cache
 F:\.net projects\backend\obj\Debug\net9.0\backend.GeneratedMSBuildEditorConfig.editorconfig
 F:\.net projects\backend\obj\Debug\net9.0\backend.AssemblyInfoInputs.cache
@@ -26,9 +34,3 @@ F:\.net projects\backend\obj\Debug\net9.0\refint\backend.dll
 F:\.net projects\backend\obj\Debug\net9.0\backend.pdb
 F:\.net projects\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 F:\.net projects\backend\obj\Debug\net9.0\ref\backend.dll
-F:\.net projects\backend\bin\Debug\net9.0\DnsClient.dll
-F:\.net projects\backend\bin\Debug\net9.0\MongoDB.Bson.dll
-F:\.net projects\backend\bin\Debug\net9.0\MongoDB.Driver.dll
-F:\.net projects\backend\bin\Debug\net9.0\SharpCompress.dll
-F:\.net projects\backend\bin\Debug\net9.0\Snappier.dll
-F:\.net projects\backend\bin\Debug\net9.0\ZstdSharp.dll

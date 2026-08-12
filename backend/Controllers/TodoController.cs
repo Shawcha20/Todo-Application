@@ -1,6 +1,7 @@
 using backend.Models;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace backend.Controllers;
 
@@ -28,6 +29,10 @@ public class TodoController: ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult>getTodoId(string id)
     {
+        if(!ObjectId.TryParse(id, out _))
+        {
+            return BadRequest("Invalid todo id");
+        }
         var todo= await _todoService.getTodoId(id);
         if (todo==null)
         {
@@ -38,6 +43,11 @@ public class TodoController: ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult>PutTodo(string id, Updatetodo req)
     {
+        if (!ObjectId.TryParse(id, out _))
+    {
+        return BadRequest("Invalid Todo ID.");
+    }
+
         var todo= await _todoService.updateTodoId(id,req);
         if(todo==null) return NotFound();
         return Ok(todo);
@@ -45,6 +55,10 @@ public class TodoController: ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> deleteTodo(string id)
     {
+        if(!ObjectId.TryParse(id, out _))
+        {
+            return BadRequest("invalid todo id");
+        }
         var todo=await _todoService.DeleteTodo(id);
         if(todo==null) return NotFound();
         return Ok(todo);
