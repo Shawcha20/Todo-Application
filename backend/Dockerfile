@@ -12,4 +12,7 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 ENV ASPNETCORE_ENVIRONMENT=Production
+# Render's container restricts inotify instances, which breaks the default
+# appsettings.json FileSystemWatcher (reloadOnChange) with an unhandled IOException.
+ENV DOTNET_hostBuilder__reloadConfigOnChange=false
 ENTRYPOINT ["dotnet", "backend.dll"]
