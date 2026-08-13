@@ -3,6 +3,14 @@ using backend.Services;
 using backend.Exceptions;
 using backend.Converters;
 var builder = WebApplication.CreateBuilder(args);
+
+// Render (and most PaaS hosts) assign the listen port at runtime via $PORT.
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
+
  builder.Services.Configure<MongoDbSettings>
  (
     builder.Configuration.GetSection("MongoDbSettings")
@@ -21,12 +29,18 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddSingleton<TodoService>();
 builder.Services.AddProblemDetails();
+// Comma-separated list, e.g. "https://your-app.vercel.app,http://localhost:3000".
+// Falls back to the local Next.js dev origin so `dotnet run` keeps working untouched.
+var allowedOrigins = builder.Configuration["AllowedOrigins"]
+    ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    ?? ["http://localhost:3000"];
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("NextJsPolicy", policy =>
     {
         policy
-        .WithOrigins("http://localhost:3000")
+        .WithOrigins(allowedOrigins)
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
@@ -45,7 +59,12 @@ if(app.Environment.IsDevelopment())
 
 // Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
+// Render terminates TLS at its edge and forwards plain HTTP to the container,
+// so redirecting here would loop; only enforce HTTPS locally.
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
