@@ -60,7 +60,7 @@ public class TodoController: ControllerBase
             return BadRequest("invalid todo id");
         }
         var todo=await _todoService.DeleteTodo(id);
-        if(todo==null) return NotFound();
+        if(!todo) return NotFound();
         return Ok(todo);
     }
 }

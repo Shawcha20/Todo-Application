@@ -1,6 +1,7 @@
 using backend.Settings;
 using backend.Services;
 using backend.Exceptions;
+using backend.Converters;
 var builder = WebApplication.CreateBuilder(args);
  builder.Services.Configure<MongoDbSettings>
  (
@@ -8,7 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
  );
 // Add services to the container.
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();// this will contain our rest apis endpoints
+// this will contain our rest apis endpoints
+// the converter makes Mongo's ObjectId travel over JSON as a plain hex string,
+// so the Next.js client can send it back on GET/PUT/DELETE /api/todo/{id}
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new ObjectIdJsonConverter());
+    });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddSingleton<TodoService>();

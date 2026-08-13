@@ -42,7 +42,7 @@ public class TodoService
         var todo= await _todos.Find(todo=>todo.ID==objectId).FirstOrDefaultAsync();
         return todo;
     }
-    public async Task<Todo> updateTodoId(string id, Updatetodo req)
+    public async Task<Todo?> updateTodoId(string id, Updatetodo req)
     {
         if(!ObjectId.TryParse(id, out var objectId))
         {
@@ -59,7 +59,7 @@ public class TodoService
     }
     public async Task<bool> DeleteTodo(string id)
     {
-        if(ObjectId.TryParse(id, out var objectid))
+        if(!ObjectId.TryParse(id, out var objectid))
         {
             return false;
         }
